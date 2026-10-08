@@ -1,12 +1,19 @@
-# Hyperion contracts
+# Traiecta contracts
 
-The on-chain half of Hyperion: a router on Stellar, a router on the EVM side, and one adapter per
+[![CI](https://github.com/Traiecta-Labs/traiecta-contracts/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Traiecta-Labs/traiecta-contracts/actions/workflows/ci.yml)
+[![License: MIT / Apache-2.0](https://img.shields.io/badge/license-MIT%20%2F%20Apache--2.0-blue.svg)](#license)
+[![Stellar](https://img.shields.io/badge/Stellar-Soroban-%237b2ff7?logo=stellar)](https://developers.stellar.org)
+[![EVM](https://img.shields.io/badge/EVM-Foundry-%233C3C3D?logo=ethereum&logoColor=white)](https://getfoundry.sh)
+[![Rust](https://img.shields.io/badge/Rust-stable-%23000000?logo=rust)](https://www.rust-lang.org)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](.github/CONTRIBUTING.md)
+
+The on-chain half of Traiecta: a router on Stellar, a router on the EVM side, and one adapter per
 rail they route over.
 
-Hyperion is not a bridge. It never decides for itself that a cross-chain message is real. It hands
+Traiecta is not a bridge. It never decides for itself that a cross-chain message is real. It hands
 transfers to rails that already made that decision and were audited for it, and it keeps the
 bookkeeping, the limits, the fee and the claims. `bridge_in` only ever acts on a call from the
-underlying rail's own verifier, and there is no path in this repository by which Hyperion attests
+underlying rail's own verifier, and there is no path in this repository by which Traiecta attests
 anything.
 
 That is a smaller promise than most bridges make, and it is the reason the code looks the way it
@@ -14,32 +21,61 @@ does. There is no validator set here, no multisig signing messages, no light cli
 instead is a lot of arithmetic that has to be exactly right, four rails that each behave slightly
 differently, and three implementations of the same wire formats that have to agree.
 
+## How it uses Stellar
+
+The Stellar half of Traiecta is a Soroban router plus one adapter per rail, and it is the leg where finality is immediate:
+
+- **Soroban router contract** (`traiecta-router`) compiled to `wasm32v1-none`, holding the fees, flow limits, claims, timelock, and adapter dispatch.
+- **Rail adapters as separate contracts** for Circle CCTP V2, Axelar ITS and GMP, and Allbridge Core, each acting only on its own rail's verifier.
+- **SEP-23 cross-chain addresses** carried as Stellar strkeys and CRC16 checked on chain before any funds move.
+- **`bridge_in` is callable only by a rail's own verifier**, so the router never attests a cross-chain message itself.
+- **Stellar Asset Contract amounts** at Stellar's seven decimals, floored to what the destination rail can represent.
+- **Soroban events** published for the off-chain indexer in [traiecta-api](https://github.com/Traiecta-Labs/traiecta-api).
+
+## Table of Contents
+
+- [How it uses Stellar](#how-it-uses-stellar)
+- [Organization overview](#organization-overview)
+- [What is in the box](#what-is-in-the-box)
+- [The test suites](#the-test-suites)
+- [Things that are easy to get wrong, and what was done about them](#things-that-are-easy-to-get-wrong-and-what-was-done-about-them)
+- [Deploying](#deploying)
+  - [Secrets](#secrets)
+- [Currently live](#currently-live)
+- [Contract sizes](#contract-sizes)
+- [Prerequisites](#prerequisites)
+- [Working on it](#working-on-it)
+- [Environment Variables Reference](#environment-variables-reference)
+- [Security Notes](#security-notes)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## Organization overview
 
-The StellarHyperion organization divides cross-chain routing across three dedicated repositories:
+The Traiecta-Labs organization divides cross-chain routing across three dedicated repositories:
 
 | Repository | Purpose | Core Technologies |
 |---|---|---|
-| `stellarhyperion-contracts` | On-chain routers, adapters, and shared protocol SDK | Soroban (Rust), EVM (Solidity, Foundry), TypeScript |
-| `stellarhyperion-backend` | Event indexer, rail pollers, keeper upkeep, and REST API | Fastify, Postgres, Redis, BullMQ, viem, stellar-sdk |
-| `stellarhyperion-frontend` | User interface, live switchyard, and transfer tracker | Next.js 16, React 19, CSS modules, wagmi, Stellar Wallets Kit |
+| `traiecta-contracts` | On-chain routers, adapters, and shared protocol SDK | Soroban (Rust), EVM (Solidity, Foundry), TypeScript |
+| `traiecta-api` | Event indexer, rail pollers, keeper upkeep, and REST API | Fastify, Postgres, Redis, BullMQ, viem, stellar-sdk |
+| `traiecta-app` | User interface, live switchyard, and transfer tracker | Next.js 16, React 19, CSS modules, wagmi, Stellar Wallets Kit |
 
-Each repository maintains independent continuous integration, dependency definitions, and issue governance while sharing protocol constants and wire codecs from `@hyperion/protocol`.
+Each repository maintains independent continuous integration, dependency definitions, and issue governance while sharing protocol constants and wire codecs from `@traiecta/protocol`.
 
 ## What is in the box
 
 ```
 soroban/              Rust workspace, five crates, compiled to wasm32v1-none
-  hyperion-core         amounts, addresses, flow windows, strkey, codecs, CCTP parsing
-  hyperion-router       the router: fees, limits, claims, timelock, adapter dispatch
-  hyperion-adapter-cctp      Circle CCTP V2
-  hyperion-adapter-axelar    Axelar ITS and GMP
-  hyperion-adapter-allbridge Allbridge Core, outbound only and honest about it
+  traiecta-core         amounts, addresses, flow windows, strkey, codecs, CCTP parsing
+  traiecta-router       the router: fees, limits, claims, timelock, adapter dispatch
+  traiecta-adapter-cctp      Circle CCTP V2
+  traiecta-adapter-axelar    Axelar ITS and GMP
+  traiecta-adapter-allbridge Allbridge Core, outbound only and honest about it
 
 evm/                  Foundry project, solc 0.8.28, via_ir
-  src/HyperionRouter.sol        the same router, in the shape this chain wants
+  src/TraiectaRouter.sol        the same router, in the shape this chain wants
   src/adapters/                 CCTP and Axelar ITS
-  src/libraries/                AmountMath, FlowGuard, StellarAddress, HyperionNotes, RouteMeta
+  src/libraries/                AmountMath, FlowGuard, StellarAddress, TraiectaNotes, RouteMeta
   test/                         unit and fuzz suites
   script/                       two phase deployment, verification, a smoke transfer
 
@@ -127,8 +163,8 @@ script/anvil-e2e.sh
 
 # Stellar
 script/stellar/build.sh                       # fails if any wasm exceeds the 64KB ledger limit
-stellar keys generate hyperion-deploy --network testnet --fund
-HYPERION_PEER_CHAIN=arc-testnet script/stellar/deploy.sh
+stellar keys generate traiecta-deploy --network testnet --fund
+TRAIECTA_PEER_CHAIN=arc-testnet script/stellar/deploy.sh
 script/stellar/execute.sh                     # once the hour is up
 script/stellar/link.sh                        # once the far side exists
 script/stellar/verify.sh
@@ -183,13 +219,33 @@ Soroban has a hard 64KB ceiling per contract, enforced by the ledger rather than
 
 | Contract | Size | Of the limit |
 |---|---|---|
-| `hyperion_router.wasm` | 51.7 KB | 80% |
-| `hyperion_adapter_cctp.wasm` | 25.2 KB | 39% |
-| `hyperion_adapter_axelar.wasm` | 24.8 KB | 38% |
-| `hyperion_adapter_allbridge.wasm` | 23.7 KB | 37% |
+| `traiecta_router.wasm` | 51.7 KB | 80% |
+| `traiecta_adapter_cctp.wasm` | 25.2 KB | 39% |
+| `traiecta_adapter_axelar.wasm` | 24.8 KB | 38% |
+| `traiecta_adapter_allbridge.wasm` | 23.7 KB | 37% |
 
 The router at eighty percent is worth watching. `script/stellar/build.sh` warns past two thirds and
 fails past the limit, so this stops being a surprise.
+
+## Prerequisites
+
+| Tool | Version / Notes | Install |
+| --- | --- | --- |
+| **Rust** | stable, with the `wasm32v1-none` target | https://rustup.rs |
+| **Stellar CLI** | latest, for Soroban builds and deployment | `brew install stellar-cli` or [cargo/docs](https://github.com/stellar/stellar-cli) |
+| **Foundry** | latest (`forge`, `anvil`), for the EVM half | `curl -L https://foundry.paradigm.xyz \| bash` then `foundryup` |
+| **Node.js** | 20 or newer, for the protocol package and deployment scripts | https://nodejs.org |
+
+> A C toolchain/LLVM is required to compile Soroban contracts. On macOS install the Xcode Command Line Tools (`xcode-select --install`).
+
+Verify your setup:
+
+```bash
+rustup target add wasm32v1-none
+forge --version
+node --version
+stellar --version
+```
 
 ## Working on it
 
@@ -216,6 +272,34 @@ before writing a single file. Every dependency there is a dev dependency, the lo
 committed, and the flag lives in the repository because an install flag that only exists on one
 machine is a build that only works on one machine.
 
+## Environment Variables Reference
+
+Deployment and record scripts read configuration from the environment. Nothing here is a secret; signing keys come from `stellar keys` (Stellar CLI secure storage) on the Stellar side and from Foundry's own account handling on the EVM side.
+
+| Variable | Used by | Purpose |
+| --- | --- | --- |
+| `TRAIECTA_PEER_CHAIN` | `script/stellar/deploy.sh` | Peer chain (rail domain) to configure |
+| `TRAIECTA_ROUTER` | `script/stellar/write-record.mjs`, `verify.sh` | Deployed router contract id (C...) |
+| `TRAIECTA_SAC` | `write-record.mjs` | Stellar Asset Contract id for the routed asset |
+| `TRAIECTA_ASSET` | `write-record.mjs` | `CODE:ISSUER` for the routed asset |
+| `TRAIECTA_CCTP`, `TRAIECTA_AXELAR` | `write-record.mjs` | Optional adapter contract ids |
+| `TRAIECTA_RECORD` | `verify.sh` | Path to the deployment record under `deployments/` |
+| `TRAIECTA_TIMELOCK_DELAY` | deployment scripts | Timelock delay (one hour floor) |
+| `TRAIECTA_FEE_BPS`, `TRAIECTA_TOKEN_FLOW_LIMIT`, `TRAIECTA_FLOW_WINDOW_LEDGERS` | deployment scripts | Router fee and flow-limit configuration |
+| `TRAIECTA_ADMIN`, `TRAIECTA_GUARDIAN`, `TRAIECTA_TREASURY` | deployment scripts | Router role addresses |
+| `TRAIECTA_SMOKE_AMOUNT`, `TRAIECTA_SMOKE_RECIPIENT` | smoke transfer scripts | One real transfer used to prove a deployment |
+
+The EVM scripts take addresses and keys from Foundry's own configuration (for example `forge script --rpc-url` and the sender named on the command line). See `script/` for the full set per platform.
+
+## Security Notes
+
+- **The router never attests a cross-chain message.** `bridge_in` acts only on a call from a rail's own verifier; there is no validator set, no multisig signing messages, and no light client in this repository.
+- **Addresses are checked on chain.** Stellar strkeys are CRC16 verified inside the contract before funds move, so a flipped bit cannot deliver to a key nobody controls.
+- **Every configuration change waits.** Router changes pass through a timelock with a one hour floor, and adapter links (`link_domain`, `map_asset`, `link_chain`, `map_token`) are once only on purpose.
+- **No private keys in the repository.** Signing identities come from `stellar keys` and Foundry; a grep for a sixty four hex value returns only wasm hashes and a tarball checksum.
+- **Deploy both sides, then link.** Peers are named only after both routers exist, because repointing a live lane is a new trust assumption rather than a configuration change.
+- **Report through private advisories.** See [.github/SECURITY.md](.github/SECURITY.md). The rails themselves are out of scope, because Traiecta routes over them and does not own them.
+
 ## Contributing
 
 `.github/CONTRIBUTING.md` covers the toolchains. The pull request template asks what changed, which
@@ -227,7 +311,7 @@ CI runs five checks behind one required status called `gate`. Every action is pi
 commit SHA, because a floating tag in a workflow that can read secrets is a supply chain hole.
 
 Security reports go through GitHub private advisories. `.github/SECURITY.md` says what is in scope
-and, more usefully, what is not: the rails themselves are out, because Hyperion routes over them
+and, more usefully, what is not: the rails themselves are out, because Traiecta routes over them
 and does not own them.
 
 ## License

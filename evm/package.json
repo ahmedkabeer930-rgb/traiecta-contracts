@@ -5,7 +5,7 @@
   "description": "Hyperion's EVM side: the router, the rail adapters, and the libraries they share",
   "license": "MIT",
   "scripts": {
-    "build": "forge build",
+    "build": "node init && forge build",
     "test": "forge test",
     "test:ci": "FOUNDRY_PROFILE=ci forge test",
     "gas": "forge test --gas-report",
