@@ -3,7 +3,7 @@ pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
 
-import {FlowLimitExceeded, InvalidWindow} from "../../src/HyperionErrors.sol";
+import {FlowLimitExceeded, InvalidWindow} from "../../src/TraiectaErrors.sol";
 import {FlowWindow} from "../../src/libraries/FlowGuard.sol";
 import {FlowGuardHarness} from "../harness/LibHarness.sol";
 

@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {AddressKind} from "../../src/HyperionTypes.sol";
+import {AddressKind} from "../../src/TraiectaTypes.sol";
 import {AmountMath} from "../../src/libraries/AmountMath.sol";
 import {FlowGuard, FlowWindow} from "../../src/libraries/FlowGuard.sol";
-import {HyperionNotes} from "../../src/libraries/HyperionNotes.sol";
 import {StellarAddress} from "../../src/libraries/StellarAddress.sol";
+import {HyperionNotes} from "../../src/libraries/TraiectaNotes.sol";
 
 /// @title An external door onto the internal libraries
 /// @notice Every library function, callable from outside.

@@ -3,7 +3,7 @@ pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
 
-import {AddressKind} from "../../src/HyperionTypes.sol";
+import {AddressKind} from "../../src/TraiectaTypes.sol";
 import {StellarAddressHarness} from "../harness/LibHarness.sol";
 
 /// @title Property fuzz testing for StellarAddress StrKey checksum mutations

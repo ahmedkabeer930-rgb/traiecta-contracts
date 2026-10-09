@@ -18,10 +18,10 @@ import {
     UnsupportedHookVersion,
     ZeroAddress,
     ZeroAddressKey
-} from "../../src/HyperionErrors.sol";
-import {AddressKind, Destination, RouteKind} from "../../src/HyperionTypes.sol";
+} from "../../src/TraiectaErrors.sol";
+import {AddressKind, Destination, RouteKind} from "../../src/TraiectaTypes.sol";
 import {AxelarItsAdapter} from "../../src/adapters/AxelarItsAdapter.sol";
-import {IHyperionRouter} from "../../src/interfaces/IHyperionRouter.sol";
+import {IHyperionRouter} from "../../src/interfaces/ITraiectaRouter.sol";
 import {Fixture} from "../Fixture.sol";
 import {DeafRouter} from "../mocks/HostileCallers.sol";
 import {MockERC20} from "../mocks/MockERC20.sol";

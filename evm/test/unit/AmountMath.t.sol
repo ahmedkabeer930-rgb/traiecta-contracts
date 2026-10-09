@@ -9,7 +9,7 @@ import {
     FeeTooHigh,
     InvalidAmount,
     InvalidDecimals
-} from "../../src/HyperionErrors.sol";
+} from "../../src/TraiectaErrors.sol";
 import {AmountMathHarness} from "../harness/LibHarness.sol";
 
 /// @title The arithmetic everything else rests on

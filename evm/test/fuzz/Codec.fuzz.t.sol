@@ -9,8 +9,8 @@ import {
     NotEvmAddress,
     UnsupportedHookVersion,
     ZeroAddressKey
-} from "../../src/HyperionErrors.sol";
-import {AddressKind} from "../../src/HyperionTypes.sol";
+} from "../../src/TraiectaErrors.sol";
+import {AddressKind} from "../../src/TraiectaTypes.sol";
 import {NotesHarness, StellarAddressHarness} from "../harness/LibHarness.sol";
 
 /// @title The address and note codecs, against arbitrary bytes

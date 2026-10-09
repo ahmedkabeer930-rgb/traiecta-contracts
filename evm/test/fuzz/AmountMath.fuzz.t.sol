@@ -9,7 +9,7 @@ import {
     FeeTooHigh,
     InvalidAmount,
     InvalidDecimals
-} from "../../src/HyperionErrors.sol";
+} from "../../src/TraiectaErrors.sol";
 import {AmountMathHarness} from "../harness/LibHarness.sol";
 
 /// @title What the arithmetic has to hold for every input, not just the interesting ones

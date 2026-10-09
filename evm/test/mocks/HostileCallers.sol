@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {OutboundRequest} from "../../src/HyperionTypes.sol";
-import {IHyperionRouter} from "../../src/interfaces/IHyperionRouter.sol";
+import {OutboundRequest} from "../../src/TraiectaTypes.sol";
+import {IHyperionRouter} from "../../src/interfaces/ITraiectaRouter.sol";
 
 /// @title A sender who cannot be paid back
 /// @notice No receive, no fallback, so the refund at the end of `bridgeOut` has nowhere to go.

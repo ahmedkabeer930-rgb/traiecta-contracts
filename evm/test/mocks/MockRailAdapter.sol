@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {Destination, RouteKind} from "../../src/HyperionTypes.sol";
+import {Destination, RouteKind} from "../../src/TraiectaTypes.sol";
 import {IRailAdapter} from "../../src/interfaces/IRailAdapter.sol";
 
 /// @title A rail that does whatever the test needs
