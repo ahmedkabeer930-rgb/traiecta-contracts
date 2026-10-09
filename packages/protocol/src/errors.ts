@@ -66,6 +66,7 @@ export const SOROBAN_ERROR_NAMES = [
   "UnsupportedRoute",
   "GasFloatTooLow",
   "ProtectedAsset",
+  "TokenDisabled",
 ] as const;
 
 export type SorobanErrorName = (typeof SOROBAN_ERROR_NAMES)[number];
