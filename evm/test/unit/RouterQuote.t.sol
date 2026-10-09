@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {HyperionRouter} from "../../src/HyperionRouter.sol";
+import {HyperionRouter} from "../../src/TraiectaRouter.sol";
 import {
     ActionKind,
     AdminAction,
@@ -9,7 +9,7 @@ import {
     QuoteBlocker,
     RouteKind,
     RouteQuote
-} from "../../src/HyperionTypes.sol";
+} from "../../src/TraiectaTypes.sol";
 import {Fixture} from "../Fixture.sol";
 import {MockERC20} from "../mocks/MockERC20.sol";
 

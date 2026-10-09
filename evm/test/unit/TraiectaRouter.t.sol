@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {RouteIsPaused, Unauthorized} from "../../src/HyperionErrors.sol";
-import {OutboundRequest, QuoteBlocker, RouteKind, RouteQuote} from "../../src/HyperionTypes.sol";
-import {IHyperionRouter} from "../../src/interfaces/IHyperionRouter.sol";
+import {RouteIsPaused, Unauthorized} from "../../src/TraiectaErrors.sol";
+import {OutboundRequest, QuoteBlocker, RouteKind, RouteQuote} from "../../src/TraiectaTypes.sol";
+import {IHyperionRouter} from "../../src/interfaces/ITraiectaRouter.sol";
 import {Fixture} from "../Fixture.sol";
 
 /// @title Granular per-route emergency pause and unpause

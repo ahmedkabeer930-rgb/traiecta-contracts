@@ -8,9 +8,9 @@ import {
     NotEvmAddress,
     UnsupportedHookVersion,
     ZeroAddressKey
-} from "../../src/HyperionErrors.sol";
-import {AddressKind} from "../../src/HyperionTypes.sol";
-import {HyperionNotes} from "../../src/libraries/HyperionNotes.sol";
+} from "../../src/TraiectaErrors.sol";
+import {AddressKind} from "../../src/TraiectaTypes.sol";
+import {HyperionNotes} from "../../src/libraries/TraiectaNotes.sol";
 import {NotesHarness} from "../harness/LibHarness.sol";
 
 /// @title The two notes Hyperion sends itself, byte by byte

@@ -10,9 +10,9 @@ import {
     RecipientNotReady,
     ReplayedMessage,
     ZeroAddress
-} from "../../src/HyperionErrors.sol";
-import {Origin, PendingClaim, RouteKind} from "../../src/HyperionTypes.sol";
-import {IHyperionRouter} from "../../src/interfaces/IHyperionRouter.sol";
+} from "../../src/TraiectaErrors.sol";
+import {Origin, PendingClaim, RouteKind} from "../../src/TraiectaTypes.sol";
+import {IHyperionRouter} from "../../src/interfaces/ITraiectaRouter.sol";
 import {Fixture} from "../Fixture.sol";
 import {MockERC20} from "../mocks/MockERC20.sol";
 import {VoidReturnToken} from "../mocks/VoidReturnToken.sol";

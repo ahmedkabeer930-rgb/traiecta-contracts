@@ -3,8 +3,8 @@ pragma solidity 0.8.28;
 
 import {Test} from "forge-std/Test.sol";
 
-import {InvalidDestination, ZeroAddressKey} from "../../src/HyperionErrors.sol";
-import {AddressKind} from "../../src/HyperionTypes.sol";
+import {InvalidDestination, ZeroAddressKey} from "../../src/TraiectaErrors.sol";
+import {AddressKind} from "../../src/TraiectaTypes.sol";
 import {StellarAddress} from "../../src/libraries/StellarAddress.sol";
 import {StellarAddressHarness} from "../harness/LibHarness.sol";
 

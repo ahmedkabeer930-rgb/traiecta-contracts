@@ -15,10 +15,10 @@ import {
     TokenDisabled,
     TokenNotRegistered,
     UnknownChain
-} from "../../src/HyperionErrors.sol";
-import {HyperionRouter} from "../../src/HyperionRouter.sol";
-import {ActionKind, AdminAction, OutboundRequest, RouteKind, TokenConfig} from "../../src/HyperionTypes.sol";
-import {IHyperionRouter} from "../../src/interfaces/IHyperionRouter.sol";
+} from "../../src/TraiectaErrors.sol";
+import {HyperionRouter} from "../../src/TraiectaRouter.sol";
+import {ActionKind, AdminAction, OutboundRequest, RouteKind, TokenConfig} from "../../src/TraiectaTypes.sol";
+import {IHyperionRouter} from "../../src/interfaces/ITraiectaRouter.sol";
 import {Fixture} from "../Fixture.sol";
 import {ReenteringToken, RefundRefuser} from "../mocks/HostileCallers.sol";
 import {MockERC20} from "../mocks/MockERC20.sol";

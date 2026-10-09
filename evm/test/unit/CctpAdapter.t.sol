@@ -14,8 +14,8 @@ import {
     Unauthorized,
     UnknownChain,
     ZeroAddress
-} from "../../src/HyperionErrors.sol";
-import {AddressKind, Destination, RouteKind} from "../../src/HyperionTypes.sol";
+} from "../../src/TraiectaErrors.sol";
+import {AddressKind, Destination, RouteKind} from "../../src/TraiectaTypes.sol";
 import {CctpAdapter} from "../../src/adapters/CctpAdapter.sol";
 import {Fixture} from "../Fixture.sol";
 import {DeafRouter} from "../mocks/HostileCallers.sol";
