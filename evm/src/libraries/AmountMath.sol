@@ -7,7 +7,7 @@ import {
     FeeTooHigh,
     InvalidAmount,
     InvalidDecimals
-} from "../HyperionErrors.sol";
+} from "../TraiectaErrors.sol";
 
 /// @title The only place in this codebase allowed to move an amount between decimal bases
 /// @notice USDC is six decimals on every EVM chain and seven on Stellar, and most Stellar issued

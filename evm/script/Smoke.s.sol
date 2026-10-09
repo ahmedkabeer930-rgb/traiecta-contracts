@@ -7,8 +7,8 @@ import {IERC20} from "openzeppelin/token/ERC20/IERC20.sol";
 
 import {MockTokenMessenger} from "../test/mocks/MockTokenMessenger.sol";
 
-import {HyperionRouter} from "../src/HyperionRouter.sol";
-import {Destination, OutboundRequest, RouteKind, RouteQuote} from "../src/HyperionTypes.sol";
+import {HyperionRouter} from "../src/TraiectaRouter.sol";
+import {Destination, OutboundRequest, RouteKind, RouteQuote} from "../src/TraiectaTypes.sol";
 import {CctpAdapter} from "../src/adapters/CctpAdapter.sol";
 
 import {DeployConfig} from "./DeployConfig.sol";

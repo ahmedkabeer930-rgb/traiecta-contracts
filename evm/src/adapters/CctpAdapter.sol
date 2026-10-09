@@ -15,12 +15,12 @@ import {
     Unauthorized,
     UnknownChain,
     ZeroAddress
-} from "../HyperionErrors.sol";
-import {AddressKind, Destination, RouteKind} from "../HyperionTypes.sol";
+} from "../TraiectaErrors.sol";
+import {AddressKind, Destination, RouteKind} from "../TraiectaTypes.sol";
 import {ITokenMessengerV2} from "../interfaces/ICctpV2.sol";
 import {IRailAdapter} from "../interfaces/IRailAdapter.sol";
-import {HyperionNotes} from "../libraries/HyperionNotes.sol";
 import {StellarAddress} from "../libraries/StellarAddress.sol";
+import {HyperionNotes} from "../libraries/TraiectaNotes.sol";
 
 /// @title Hyperion over Circle's CCTP V2
 /// @author dotmantissa

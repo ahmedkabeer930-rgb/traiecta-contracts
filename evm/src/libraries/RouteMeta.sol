@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {RouteKind} from "../HyperionTypes.sol";
+import {RouteKind} from "../TraiectaTypes.sol";
 
 /// @title What each rail is actually like
 /// @notice Three questions the app and the router both need answered about a rail, kept here

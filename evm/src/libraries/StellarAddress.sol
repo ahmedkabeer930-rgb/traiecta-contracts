@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {InvalidDestination, ZeroAddressKey} from "../HyperionErrors.sol";
-import {AddressKind} from "../HyperionTypes.sol";
+import {InvalidDestination, ZeroAddressKey} from "../TraiectaErrors.sol";
+import {AddressKind} from "../TraiectaTypes.sol";
 
 /// @title Stellar destinations, read and checked on this side of the bridge
 /// @notice A Stellar address arrives here the way a person copies it out of their wallet: fifty

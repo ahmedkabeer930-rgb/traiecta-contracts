@@ -16,17 +16,17 @@ import {
     UnexpectedRailContract,
     UnknownChain,
     ZeroAddress
-} from "../HyperionErrors.sol";
-import {AddressKind, Destination, Origin, RouteKind} from "../HyperionTypes.sol";
+} from "../TraiectaErrors.sol";
+import {AddressKind, Destination, Origin, RouteKind} from "../TraiectaTypes.sol";
 import {
     IAxelarGasService,
     IInterchainTokenExecutable,
     IInterchainTokenService
 } from "../interfaces/IAxelar.sol";
-import {IHyperionRouter} from "../interfaces/IHyperionRouter.sol";
 import {IRailAdapter} from "../interfaces/IRailAdapter.sol";
-import {HyperionNotes} from "../libraries/HyperionNotes.sol";
+import {IHyperionRouter} from "../interfaces/ITraiectaRouter.sol";
 import {StellarAddress} from "../libraries/StellarAddress.sol";
+import {HyperionNotes} from "../libraries/TraiectaNotes.sol";
 
 /// @title Hyperion over Axelar's Interchain Token Service
 /// @author dotmantissa

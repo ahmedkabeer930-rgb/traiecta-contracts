@@ -37,7 +37,7 @@ import {
     Unauthorized,
     UnknownChain,
     ZeroAddress
-} from "./HyperionErrors.sol";
+} from "./TraiectaErrors.sol";
 import {
     ActionKind,
     AddressKind,
@@ -51,9 +51,9 @@ import {
     RouteKind,
     RouteQuote,
     TokenConfig
-} from "./HyperionTypes.sol";
-import {IHyperionRouter} from "./interfaces/IHyperionRouter.sol";
+} from "./TraiectaTypes.sol";
 import {IRailAdapter} from "./interfaces/IRailAdapter.sol";
+import {IHyperionRouter} from "./interfaces/ITraiectaRouter.sol";
 import {AmountMath} from "./libraries/AmountMath.sol";
 import {FlowGuard, FlowWindow} from "./libraries/FlowGuard.sol";
 import {RouteMeta} from "./libraries/RouteMeta.sol";

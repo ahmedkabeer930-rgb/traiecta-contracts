@@ -9,7 +9,7 @@ pragma solidity 0.8.28;
 // operator reading "MuxedNotSupported" off an EVM revert and off a Soroban transaction result
 // should not have to look up which one means what.
 
-import {RouteKind} from "./HyperionTypes.sol";
+import {RouteKind} from "./TraiectaTypes.sol";
 
 // Lifecycle and roles.
 error AlreadyInitialized();

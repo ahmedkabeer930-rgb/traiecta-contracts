@@ -12,7 +12,7 @@ import {
     RouteKind,
     RouteQuote,
     TokenConfig
-} from "../HyperionTypes.sol";
+} from "../TraiectaTypes.sol";
 
 /// @title The router, as everything outside it sees it
 /// @notice Two entry points carry every transfer. `bridgeOut` is what a person calls, and

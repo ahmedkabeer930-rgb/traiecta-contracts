@@ -3,8 +3,8 @@ pragma solidity 0.8.28;
 
 import {console} from "forge-std/console.sol";
 
-import {HyperionRouter} from "../src/HyperionRouter.sol";
-import {ActionKind, AdminAction, RouteKind} from "../src/HyperionTypes.sol";
+import {HyperionRouter} from "../src/TraiectaRouter.sol";
+import {ActionKind, AdminAction, RouteKind} from "../src/TraiectaTypes.sol";
 import {AxelarItsAdapter} from "../src/adapters/AxelarItsAdapter.sol";
 import {CctpAdapter} from "../src/adapters/CctpAdapter.sol";
 

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {MalformedMessage, NotEvmAddress, UnsupportedHookVersion, ZeroAddressKey} from "../HyperionErrors.sol";
-import {AddressKind} from "../HyperionTypes.sol";
+import {MalformedMessage, NotEvmAddress, UnsupportedHookVersion, ZeroAddressKey} from "../TraiectaErrors.sol";
+import {AddressKind} from "../TraiectaTypes.sol";
 import {StellarAddress} from "./StellarAddress.sol";
 
 /// @title What Hyperion says to itself across a rail

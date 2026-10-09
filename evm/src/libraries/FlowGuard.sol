@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {FlowLimitExceeded, InvalidWindow} from "../HyperionErrors.sol";
+import {FlowLimitExceeded, InvalidWindow} from "../TraiectaErrors.sol";
 
 /// @notice Rolling record of how much of a flow limit has been spent.
 /// @dev Two numbers and an epoch. No array of timestamps, because the list would grow with

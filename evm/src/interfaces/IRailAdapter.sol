@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.28;
 
-import {Destination, RouteKind} from "../HyperionTypes.sol";
+import {Destination, RouteKind} from "../TraiectaTypes.sol";
 
 /// @title What the router expects from every rail adapter
 /// @notice The seam the whole design rests on. The router knows about fees, limits, claims and

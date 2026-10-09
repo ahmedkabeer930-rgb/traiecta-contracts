@@ -3,7 +3,7 @@ pragma solidity 0.8.28;
 
 import {Script} from "forge-std/Script.sol";
 
-import {RouteKind} from "../src/HyperionTypes.sol";
+import {RouteKind} from "../src/TraiectaTypes.sol";
 
 /// @title Everything a deployment needs to know that is not in the source tree
 /// @notice Read from the environment, never from a constant in here, with one exception noted
