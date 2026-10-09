@@ -194,6 +194,29 @@ fn an_unregistered_token_cannot_move_at_all() {
 }
 
 #[test]
+fn a_token_that_was_switched_off_is_refused_as_switched_off_rather_than_unknown() {
+    let w = World::new();
+    // Registered, mapped and deliberately retired. Reporting this as "does not carry that token"
+    // would send somebody looking for a registration that is already there, and the EVM router
+    // has always called this case TokenDisabled.
+    w.router().disable_token(&w.guardian, &w.token_id);
+    assert_eq!(
+        w.router().try_bridge_out(
+            &w.user,
+            &OutboundRequest {
+                token: w.token_id.clone(),
+                amount: HUNDRED,
+                route: RouteKind::Cctp,
+                destination: dest(&w),
+                destination_decimals: EVM_DECIMALS,
+                min_destination_amount: 0
+            }
+        ),
+        Err(Ok(HyperionError::TokenDisabled))
+    );
+}
+
+#[test]
 fn zero_and_negative_amounts_are_refused() {
     let w = World::new();
     for amount in [0i128, -1, -HUNDRED] {

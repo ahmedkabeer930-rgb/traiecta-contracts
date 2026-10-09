@@ -177,9 +177,12 @@ fn a_token_that_was_switched_off_is_refused_even_though_it_is_still_registered()
         .router()
         .quote_routes(&w.token_id, &HUNDRED, &EVM_DECIMALS);
     for route in super::doubles::all_routes() {
+        // Switched off, not unknown. Saying `TokenNotRegistered` here would send somebody
+        // looking for a registration that is already there, and it is the tag this test has to
+        // keep apart from `an_unknown_token_is_refused_on_every_rail` above.
         assert_eq!(
             quote_for(&quotes, route).reason,
-            HyperionError::TokenNotRegistered as u32
+            HyperionError::TokenDisabled as u32
         );
     }
 }
