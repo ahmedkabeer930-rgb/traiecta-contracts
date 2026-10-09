@@ -98,4 +98,9 @@ pub enum HyperionError {
     GasFloatTooLow = 45,
     /// Somebody tried to move an asset the contract holds on purpose.
     ProtectedAsset = 46,
+    /// A registered token that an operator has switched off for new transfers.
+    ///
+    /// Distinct from `TokenNotRegistered`: the asset is known and mapped, and it was retired
+    /// rather than never carried. The two are different answers for the app to give.
+    TokenDisabled = 47,
 }

@@ -133,7 +133,7 @@ impl HyperionRouter {
 
         let token_cfg = storage::token_config(&env, &token)?;
         if !token_cfg.enabled {
-            return Err(HyperionError::TokenNotRegistered);
+            return Err(HyperionError::TokenDisabled);
         }
 
         let split = apply_fee(amount, cfg.fee_bps)?;
@@ -628,7 +628,10 @@ fn quote_one(
 ) -> RouteQuote {
     let token_cfg = match token_cfg {
         Some(c) if c.enabled => c,
-        Some(_) | None => return unavailable(route, amount, HyperionError::TokenNotRegistered),
+        // Registered but switched off is a different answer than never carried, and the app can
+        // only tell an operator to turn it back on if the tag says so.
+        Some(_) => return unavailable(route, amount, HyperionError::TokenDisabled),
+        None => return unavailable(route, amount, HyperionError::TokenNotRegistered),
     };
     if amount <= 0 {
         return unavailable(route, amount, HyperionError::InvalidAmount);
